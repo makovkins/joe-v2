@@ -25,25 +25,25 @@ contract CoreDeployer is Script {
         address wNative;
     }
 
-    string[] chains = ["avalanche_fuji", "arbitrum_one_goerli"];
+    //string[] chains = ["avalanche_fuji", "arbitrum_one_goerli"];
 
     function setUp() public {
-        _overwriteDefaultArbitrumRPC();
+        //_overwriteDefaultArbitrumRPC();
     }
 
     function run() public {
         string memory json = vm.readFile("script/config/deployments.json");
-        address deployer = vm.rememberKey(vm.envUint("DEPLOYER_PRIVATE_KEY"));
+        address deployer = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
 
         console.log("Deployer address: %s", deployer);
 
-        for (uint256 i = 0; i < chains.length; i++) {
-            bytes memory rawDeploymentData = json.parseRaw(string(abi.encodePacked(".", chains[i])));
+//        for (uint256 i = 0; i < chains.length; i++) {
+            bytes memory rawDeploymentData = json.parseRaw(string(abi.encodePacked(".", "bscTestnet")));
             Deployment memory deployment = abi.decode(rawDeploymentData, (Deployment));
 
-            console.log("\nDeploying V2.1 on %s", chains[i]);
+            console.log("\nDeploying V2.2");
 
-            vm.createSelectFork(StdChains.getChain(chains[i]).rpcUrl);
+            //vm.createSelectFork(StdChains.getChain(chains[i]).rpcUrl);
 
             vm.broadcast(deployer);
             LBFactory factory = new LBFactory(deployer, deployer, FLASHLOAN_FEE);
@@ -71,14 +71,14 @@ contract CoreDeployer is Script {
 
             factory.setLBPairImplementation(address(pairImplementation));
             console.log("LBPair implementation set on factory\n");
-
+/*
             uint256 quoteAssets = ILBLegacyFactory(deployment.factoryV2).getNumberOfQuoteAssets();
             for (uint256 j = 0; j < quoteAssets; j++) {
                 IERC20 quoteAsset = ILBLegacyFactory(deployment.factoryV2).getQuoteAsset(j);
                 factory.addQuoteAsset(quoteAsset);
                 console.log("Quote asset whitelisted -->", address(quoteAsset));
             }
-
+*/
             uint256[] memory presetList = BipsConfig.getPresetList();
             for (uint256 j; j < presetList.length; j++) {
                 BipsConfig.FactoryPreset memory preset = BipsConfig.getPreset(presetList[j]);
@@ -95,19 +95,8 @@ contract CoreDeployer is Script {
                 );
             }
 
-            factory.transferOwnership(deployment.multisig);
+            //factory.transferOwnership(deployment.multisig);
             vm.stopBroadcast();
-        }
-    }
-
-    function _overwriteDefaultArbitrumRPC() private {
-        StdChains.setChain(
-            "arbitrum_one_goerli",
-            StdChains.ChainData({
-                name: "Arbitrum One Goerli",
-                chainId: 421613,
-                rpcUrl: vm.envString("ARBITRUM_TESTNET_RPC_URL")
-            })
-        );
+//        }
     }
 }

@@ -14,5 +14,21 @@
     "router_v1": "0x454206AD825cAfaE03c9581014AF6b74f7D53713",
     "router_v2": "0x6E9603f925FB5A74f7321f51499d9633c1252893",
     "w_native": "0xaE4EC9901c3076D0DdBe76A520F9E90a6227aCB7"
+  },
+  "bscTestnet": {
+    "factory_v1": "",
+    "factory_v2": "",
+    "multisig": "",
+    "router_v1": "",
+    "router_v2": "",
+    "w_native": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd"
+  },
+  "bscMainnet": {
+    "factory_v1": "0x0000000000000000000000000000000000000000",
+    "factory_v2": "0x0000000000000000000000000000000000000000",
+    "multisig": "0x0000000000000000000000000000000000000000",
+    "router_v1": "0x0000000000000000000000000000000000000000",
+    "router_v2": "0x0000000000000000000000000000000000000000",
+    "w_native": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
   }
 }
