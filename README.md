@@ -66,3 +66,16 @@ To run tests, run the following command:
 ```
 forge test
 ```
+
+## Verification
+
+```
+forge verify-contract CONTRACT_ADDRESS LBFactory --watch --verifier-url https://api-testnet.bscscan.com/api \
+    --constructor-args $(cast abi-encode "constructor(address,address,uint256)" 0x2F500DFB83DE45D36AB04061Cb44AB1A8684dd00 0x2F500DFB83DE45D36AB04061Cb44AB1A8684dd00 5000000000000)
+    
+forge verify-contract CONTRACT_ADDRESS LBPair --watch --verifier-url https://api-testnet.bscscan.com/api \
+    --constructor-args $(cast abi-encode "constructor(address)" LB_FACTORY_ADDRESS)    
+```
+
+forge verify-contract 0xba2bcf4677c2fec4f68dfc6e51305eee46e71246 LBPair --watch --verifier-url https://api-testnet.bscscan.com/api \
+--constructor-args $(cast abi-encode "constructor(address)" 0x4279a29f923180c172e48303475b2f70cf2e3925)
